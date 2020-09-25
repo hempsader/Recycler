@@ -3,15 +3,18 @@ package com.example.recycler;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends RecyclerViewLogic {
     private static final String[] items={"lorem", "ipsum", "dolor",
@@ -24,6 +27,7 @@ public class MainActivity extends RecyclerViewLogic {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setLayoutManger(new LinearLayoutManager(this));
+        getRv().addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         setAdapter(new NiceAdapter());
     }
     public class NiceAdapter extends RecyclerView.Adapter<NiceAdapter.RawHolder> {
@@ -43,7 +47,7 @@ public class MainActivity extends RecyclerViewLogic {
             return items.length;
         }
 
-        public class RawHolder extends RecyclerView.ViewHolder{
+        public class RawHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
             TextView label;
             TextView size;
             ImageView icon;
@@ -55,6 +59,7 @@ public class MainActivity extends RecyclerViewLogic {
                 size = itemView.findViewById(R.id.size);
                 icon = itemView.findViewById(R.id.icon);
                 template=size.getContext().getString(R.string.size_template);
+                itemView.setOnClickListener(this);
             }
             void bindModel(String item)
             {
@@ -67,6 +72,11 @@ public class MainActivity extends RecyclerViewLogic {
                 }else{
                     icon.setImageResource(R.drawable.ic_launcher_foreground);
                 }
+            }
+
+            @Override
+            public void onClick(View view) {
+                Log.d("aa",String.valueOf(getAdapterPosition()));
             }
         }
 

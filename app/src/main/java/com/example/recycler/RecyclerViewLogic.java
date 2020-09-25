@@ -23,6 +23,11 @@ public class RecyclerViewLogic extends Activity {
         getRecyclerView().setLayoutManager(manager);
     }
 
+    public RecyclerView getRv()
+    {
+        return rv;
+    }
+
     private RecyclerView.Adapter getAdapter()
     {
         return getRecyclerView().getAdapter();
